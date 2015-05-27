@@ -53,6 +53,24 @@ var Snackbar = React.createClass({
     return this.context.muiTheme.spacing;
   },
 
+  componentWillReceiveProps: function (props) {
+
+    var self = this;
+    if (!props.dismissAfter) {
+        return;
+    }
+
+    if (this.state.timeoutId) {
+        clearTimeout( this.state.timeoutId );
+    }
+
+    this.state.timeoutId = setTimeout(function() {
+        self.dismiss();
+    },  props.dismissAfter);
+
+    this.setState(this.state);
+  },
+
   getStyles: function() {
     var styles = {
       root: {
